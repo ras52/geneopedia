@@ -15,3 +15,7 @@ password = ""
 database = "geneopedia"
 log_sql = 0
 
+[mogilefs]
+hostname = "localhost"
+port     = 7001
+domain   = "geneopedia"

@@ -109,6 +109,7 @@ function fetch_one($table, $key, $id, $fields = null) {
 
 function insert_array_contents($table, $fields) {
   global $dbh;
+  if (!$dbh) db_connect();
 
   # Generate both fields simultaneously, as it's not clear array_keys
   # is guaranteed to return in a consistent ordering (although empirically

@@ -6,7 +6,7 @@ include_once('include/database.php');
 function error() {
   http_response_code(404);
   header('Content-Type: text/plain');
-  exit(1);
+  exit;
 }
 
 function raw_content() {

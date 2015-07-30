@@ -34,6 +34,9 @@ if [ -e $ROOT/install.local.sh ]; then
   . $ROOT/install.local.sh
 fi
 
+mogadm domain add geneopedia
+mogadm class add geneopedia files
+
 if crontab -l > /dev/null 2>&1; then
   echo Not overwriting user crontab >&2
 else
