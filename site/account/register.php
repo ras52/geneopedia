@@ -1,4 +1,6 @@
 <?php
+set_include_path('..');
+
 include_once('include/database.php');
 include_once('include/forms.php');
 include_once('include/activation.php');

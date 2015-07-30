@@ -1,13 +1,19 @@
 <?php 
 include_once('include/perms.php');
-?>
-<ul>
-  <li><a href=".">Home</a></li>
-  <?php if (user_logged_in()) { ?>
-  <li><a href="logout.php">Log out</a></li>
-  <?php } else { ?>
-  <li><a href="register.php">Register</a></li>
-  <li><a href="login.php">Log in</a></li>
-  <?php } ?>
-</ul>
 
+function menu() {
+  global $config;
+  $root = $config['http_path'];
+?>
+  <ul>
+    <li><a href="<?php esc($root) ?>">Home</a></li>
+    <?php if (user_logged_in()) { ?>
+    <li><a href="<?php esc($root) ?>account/logout">Log out</a></li>
+    <?php } else { ?>
+    <li><a href="<?php esc($root) ?>account/register">Register</a></li>
+    <li><a href="<?php esc($root) ?>account/login">Log in</a></li>
+    <?php } ?>
+  </ul>
+<?php }
+
+menu();

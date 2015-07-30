@@ -1,4 +1,6 @@
 <?php
+set_include_path('..');
+
 include_once('include/database.php');
 include_once('include/forms.php');
 include_once('include/perms.php');
@@ -6,15 +8,16 @@ include_once('include/perms.php');
 
 function set_login_cookie($uid, $expires) {
   global $config;
-  setcookie( 'uid', $uid, $expires ); 
-  setcookie( 'auth', crypt($uid . $config['auth']['secret']), $expires );
+  setcookie( 'uid', $uid, $expires, $config['http_path'] ); 
+  setcookie( 'auth', crypt($uid . $config['auth']['secret']), 
+                     $expires, $config['http_path'] );
 }  
 
 function redirect_away() {
   if (array_key_exists('return', $_GET))
     do_redirect($_GET['return']);
   else
-    do_redirect('index.php');
+    do_redirect(''); # index.php
   exit;
 }
 

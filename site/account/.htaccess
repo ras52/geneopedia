@@ -1,0 +1,8 @@
+Options -MultiViews
+
+RewriteEngine on
+
+RewriteRule login login.php [L]
+RewriteRule logout logout.php [L]
+RewriteRule register register.php [L]
+RewriteRule activate/(.*) activate.php?token=$1 [PT,L]

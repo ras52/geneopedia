@@ -1,4 +1,6 @@
 <?php
+set_include_path('..');
+
 include_once('include/database.php');
 
 function content() {
@@ -34,7 +36,7 @@ function content() {
 
     <p>Thank you for activating your account.
       You shouldn't need to do that again.
-      You may now want to <a href="login.php">log in</a>.</p>
+      You may now want to <a href="login">log in</a>.</p>
 
 <?php }
 

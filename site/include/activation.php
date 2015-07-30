@@ -81,7 +81,7 @@ function send_activation_email($email, $name, $token) {
         . "\n"
         . "To activate your account, please follow the following link:\n"
         . "\n"
-        . "  ${root}activate.php?token=".$token."\n"
+        . "  ${root}account/activate/".$token."\n"
         . "\n"
         . "If you did not request this account, there is no need to \n"
         . "take any further action, and you will not receive further \n"

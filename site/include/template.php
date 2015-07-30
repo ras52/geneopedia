@@ -10,15 +10,16 @@ header('Content-Type: text/html; charset=utf-8');
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title><?php esc($config['title']) ?></title>
-    <link rel="icon" href="favicon.ico" sizes="16x16" 
-          type="image/vnd.microsoft.icon" />
-    <link rel="stylesheet" href="style.css" type="text/css" />
+    <link rel="icon" href="<?php esc($config['http_path']) 
+          ?>favicon.ico" sizes="16x16" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" href="<?php esc($config['http_path'])
+          ?>style.css" type="text/css" />
   </head>
   <body>
     <table id="page-table" border="0" cellspacing="0" cellpadding="0">
       <tr id="page-header">
-        <td id="left-header"><img src="geneopedia.png" 
-          alt="<?php esc($config['title']) ?>" /> </td>
+        <td id="left-header"><img src="<?php esc($config['http_path'])
+          ?>geneopedia.png" alt="<?php esc($config['title']) ?>" /></td>
         <td id="right-header"><h1><a href="."><?php 
           esc($config['title']) ?></a></h1></td>
       </tr>
