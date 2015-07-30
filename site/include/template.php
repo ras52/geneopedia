@@ -16,10 +16,10 @@ header('Content-Type: text/html; charset=utf-8');
           ?>style.css" type="text/css" />
   </head>
   <body>
-    <table id="page-table" border="0" cellspacing="0" cellpadding="0">
+    <table id="page-table">
       <tr id="page-header">
         <td id="left-header"><img src="<?php esc($config['http_path'])
-          ?>geneopedia.png" alt="<?php esc($config['title']) ?>" /></td>
+          ?>siteicon.png" alt="<?php esc($config['title']) ?>" /></td>
         <td id="right-header"><h1><a href="."><?php 
           esc($config['title']) ?></a></h1></td>
       </tr>
@@ -32,7 +32,9 @@ header('Content-Type: text/html; charset=utf-8');
         </td>
       </tr>
       <tr>
-        <td id="page-footer" colspan="2">Copyright © 2015, Richard Smith.</td>
+        <td id="page-footer" colspan="2">
+          <p>Copyright © 2015, Richard Smith.</p>
+        </td>
       </tr>
     </table>
   </body>

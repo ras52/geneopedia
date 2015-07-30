@@ -31,6 +31,7 @@ function maybe_log($sql) {
 function fetch_one_cell($sql) {
   global $dbh;
   maybe_log($sql);
+  if (!$dbh) db_connect();
   $result = mysql_query($sql, $dbh) 
     or die('cannot execute sql: ' . mysql_error());
   $row = mysql_fetch_array($result, MYSQL_NUM);
@@ -39,6 +40,7 @@ function fetch_one_cell($sql) {
 
 function fetch_one_or_none($table, $key, $id, $fields = null) {
   global $dbh;
+  if (!$dbh) db_connect();
   $where = sprintf("%s='%s'", $key, mysql_real_escape_string($id, $dbh));
   $objs = fetch_wol($fields, $table, $where);
   if (count($objs)) return $objs[0];
@@ -54,6 +56,7 @@ function fetch_one($table, $key, $id, $fields = null) {
 function fetch_objs_with_sql($sql) {
   global $dbh;
   maybe_log($sql);
+  if (!$dbh) db_connect();
   $result = mysql_query($sql, $dbh)
     or die('Cannot execute SQL: ' . mysql_error($dbh));
 
@@ -66,8 +69,6 @@ function fetch_objs_with_sql($sql) {
 
 function fetch_wghol($fields, $tables, $where, $groupby = null, $having = null,
                      $order = null, $limit = null, $offset = null) {
-  global $dbh;
-
   if (!$fields) $sql = "SELECT *";
   else $sql = "SELECT $fields";
 
@@ -95,6 +96,7 @@ function fetch_wol($fields, $tables, $where,
 
 function simple_where_clause($key, $id) {
   global $dbh;
+  if (!$dbh) db_connect();
   return sprintf("%s='%s'", $key, mysql_real_escape_string($id, $dbh));
 }
 
@@ -143,5 +145,12 @@ function update_where($table, $fields, $where) {
 
 function update_all($table, $fields, $key, $id) {
   update_where($table, $fields, simple_where_clause($key, $id));
+}
+
+function update_local_object(&$obj, $sets) {
+  $o = (array)$obj;
+  foreach (array_keys($sets) as $k)
+    $o[$k] = $sets[$k];
+  $obj = (object)$o;
 }
 

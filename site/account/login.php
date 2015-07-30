@@ -35,7 +35,6 @@ function do_login() {
 
   error_log("Login attempt from <$email>");
 
-  db_connect();
   $users = fetch_all('users', 'email_address', $email);
   if (count($users) > 1) die('Multiple users with that address!');
 
@@ -61,6 +60,12 @@ function content() {
   global $errors; ?>
 
   <h2>Login</h2>
+
+  <p>If you have not yet registered for an account, you will need to
+    <a href="register">register</a> before you can log in.
+    If you have have forgotten your password, you can
+    <a href="request-reset">reset it</a>.</p>
+
   <?php show_error_list($errors); ?>
 
     <form method="post" action="" accept-charset="UTF-8">

@@ -7,8 +7,6 @@ include_once('include/activation.php');
 
 
 function content() {
-  db_connect();
-
   $errors = array();
   if (array_key_exists('register', $_POST)) {
     $name = $_POST['name'];

@@ -28,7 +28,7 @@ sed -r "s/^([ \t]*password[ \t]*=[ \t]*)\"\"/\1\"$MYSQLPASS\"/;
   < $ROOT/site/include/config.ini.template \
   > $ROOT/site/include/config.ini
 
-mysql -p"$MYSQLPASS" -ugeneopedia geneopedia < $ROOT/db/001-users.sql
+$ROOT/mysql.php < $ROOT/db/001-users.sql
 
 if [ -e $ROOT/install.local.sh ]; then
   . $ROOT/install.local.sh

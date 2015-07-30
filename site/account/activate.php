@@ -4,8 +4,6 @@ set_include_path('..');
 include_once('include/database.php');
 
 function content() {
-  db_connect();
-
   $errors = array();
 
   if (!array_key_exists('token', $_GET) || !$_GET['token'])
@@ -19,7 +17,8 @@ function content() {
  
   if (count($errors)) { ?>
     <h2>Activation failed</h2>
-    <?php return;
+    <?php show_error_list($errors);
+    return;
   }
 
 
