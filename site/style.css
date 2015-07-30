@@ -1,0 +1,77 @@
+body {
+    font-family: "Lucida Grande", Verdana, Geneva, Lucida, 
+        Arial, Helvetica, sans-serif;
+    background-color: white;
+    margin: 0em;
+}
+
+h1 {
+    color: #00a651; /* Our cedar green colour */
+    font-size: 150%;
+    font-weight: normal;
+    vertical-align: bottom;
+    margin: 0;
+    margin-bottom: 0.5em; 
+    width: 100%;
+    padding-top: 0.5em;
+}
+
+h1 a, h1 a:link, h1 a:visited {
+    color: #00a651; /* Our cedar green colour */
+}
+
+a {
+    text-decoration: none;
+}
+
+
+#page-header, #left-header, #page-main, #page-menu, #page-footer {
+    vertical-align: top;
+}
+
+#page-header, #page-footer {
+    width: 100%;
+}
+
+#left-header, #page-menu {
+    width: 150px;
+}
+
+#page-header {
+    border-bottom: 1px solid #00a651; /* Our cedar green colour */
+}
+
+#page-footer {
+    border-top: 1px solid #00a651; /* Our cedar green colour */
+}
+
+#page-content, #right-header {
+    width: 100%;
+}
+
+
+#page-footer {
+    margin-top: 0.5em;
+    font-size: 75%;
+}       
+
+#page-menu ul, #page-footer {
+    padding-left: 15px;
+}
+
+#page-menu li {
+    list-style-type: none;
+}
+
+@media print {
+    #page-menu {
+        display: none !important;
+    }
+
+    #left-header, #right-header {
+        display: inline-block;
+        width: auto;
+    } 
+}
+
+
