@@ -12,5 +12,6 @@ CREATE TABLE users (
     activation_token    TEXT,
     date_verified       DATETIME,
     new_email_address   TEXT
-);
+
+) DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
 

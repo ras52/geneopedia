@@ -10,9 +10,7 @@ function content() {
 
   $user = fetch_one_or_none('users', 'id', user_logged_in());
 
-  ?>
-    <h2>Account</h2>
-  <?php
+  page_header('Account');
   $errors = array();
 
   if (array_key_exists('apply',$_POST)) {

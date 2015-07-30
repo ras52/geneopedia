@@ -21,17 +21,15 @@ function content() {
     if (count($user) != 1)
       $errors[] = 'Invalid reset token';
 
-    if (count($errors)) { ?>
-      <h2>Reset failed</h2>
-      <?php show_error_list($errors);
+    if (count($errors)) {
+      page_header('Reset failed');
+      show_error_list($errors);
       return;
     }
 
     $uid = $user->id;
   }
-  ?>
-    <h2>Reset password</h2>
-  <?php
+  page_header('Reset password');
 
   if (array_key_exists('reset',$_POST)) {
     if (!isset($_POST['password']) || !isset($_POST['password2'])

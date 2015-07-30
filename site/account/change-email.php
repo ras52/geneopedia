@@ -55,10 +55,9 @@ function content() {
   }
 
   $fields = array();
-  ?>
-      <h2>Change email address</h2>
 
-    <?php show_error_list($errors); ?>
+  page_header('Change email address');
+  show_error_list($errors); ?>
  
     <form method="post" action="" accept-charset="UTF-8">
       <div class="fieldrow">

@@ -15,9 +15,9 @@ function content() {
   if (count($user) != 1)
     $errors[] = 'Invalid activation token';
  
-  if (count($errors)) { ?>
-    <h2>Activation failed</h2>
-    <?php show_error_list($errors);
+  if (count($errors)) { 
+    page_header('Activation failed');
+    show_error_list($errors);
     return;
   }
 

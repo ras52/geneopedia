@@ -18,4 +18,7 @@ function do_redirect($url) {
   return header("Location: ${root}${url}");
 }
 
+function page_header($title) { ?>
+  <h2><?php esc($title) ?></h2>
+<?php }
 

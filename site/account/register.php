@@ -51,9 +51,9 @@ function content() {
         return;
     }
   }
-  ?>
-    <h2>Register for an account</h2>
-    <?php show_error_list($errors); ?>
+  
+  page_header('Register for an account');
+  show_error_list($errors); ?>
 
     <form method="post" action="" accept-charset="UTF-8">
       <div class="fieldrow">

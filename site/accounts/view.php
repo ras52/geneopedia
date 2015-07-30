@@ -28,11 +28,7 @@ function header_content() {
 
 function content() {
   global $user;  
-?>
-
-  <h2><?php esc($user->name) ?></h2>
-
-<?php
+  page_header($user->name);
 }
 
 preload_user();

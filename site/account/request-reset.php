@@ -28,9 +28,7 @@ function send_reset_email($email, $name, $token) {
 
 function content() { 
   $errors = array();
-  ?>
-      <h2>Request password reset</h2>
-  <?php
+  page_header('Request password reset');
 
   if (array_key_exists('reset',$_POST)) {
     if (!isset($_POST['email']) || !$_POST['email'])

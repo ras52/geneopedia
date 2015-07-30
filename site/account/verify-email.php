@@ -27,9 +27,9 @@ function content() {
     <p>Your email address has been changed to
       <tt><?php esc($user->new_email_address) ?></tt>.</p>
     <?php return;
-  } ?>
-  <h2>Address verification failed</h2>
-  <?php show_error_list($errors); 
+  } 
+  page_header('Address verification failed');
+  show_error_list($errors); 
 }
 
 include('include/template.php');
