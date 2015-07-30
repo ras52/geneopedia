@@ -1,5 +1,7 @@
 <?php
 
+include_once('include/utils.php');
+
 function db_connect() {
   global $dbh, $config;
   if ($dbh) return;
@@ -28,37 +30,22 @@ function maybe_log($sql) {
     error_log($sql);
 }
 
-function fetch_one_cell($sql) {
+function exec_sql($sql) {
   global $dbh;
   maybe_log($sql);
   if (!$dbh) db_connect();
-  $result = mysql_query($sql, $dbh) 
-    or die('cannot execute sql: ' . mysql_error());
-  $row = mysql_fetch_array($result, MYSQL_NUM);
+  $result = mysql_query($sql, $dbh);
+  if (!$result) die('Cannot execute SQL: ' . mysql_error($dbh));
+  return $result;
+}
+
+function fetch_one_cell($sql) {
+  $row = mysql_fetch_array(exec_sql($sql), MYSQL_NUM);
   return $row[0];
 }
 
-function fetch_one_or_none($table, $key, $id, $fields = null) {
-  global $dbh;
-  if (!$dbh) db_connect();
-  $where = sprintf("%s='%s'", $key, mysql_real_escape_string($id, $dbh));
-  $objs = fetch_wol($fields, $table, $where);
-  if (count($objs)) return $objs[0];
-  else return null;
-}
-
-function fetch_one($table, $key, $id, $fields = null) {
-  $obj = fetch_one_or_none($table, $key, $id, $fields)
-    or die('No such '.$table);
-  return $obj;
-}
-
 function fetch_objs_with_sql($sql) {
-  global $dbh;
-  maybe_log($sql);
-  if (!$dbh) db_connect();
-  $result = mysql_query($sql, $dbh)
-    or die('Cannot execute SQL: ' . mysql_error($dbh));
+  $result = exec_sql($sql);
 
   $objs = array();
   while ($obj = mysql_fetch_object($result))
@@ -105,6 +92,21 @@ function fetch_all($table, $key, $id, $order = null) {
                      null, null, $order);
 }
 
+function fetch_one_or_none($table, $key, $id, $fields = null) {
+  global $dbh;
+  if (!$dbh) db_connect();
+  $where = sprintf("%s='%s'", $key, mysql_real_escape_string($id, $dbh));
+  $objs = fetch_wol($fields, $table, $where);
+  if (count($objs)) return $objs[0];
+  else return null;
+}
+
+function fetch_one($table, $key, $id, $fields = null) {
+  $obj = fetch_one_or_none($table, $key, $id, $fields)
+    or die('No such '.$table);
+  return $obj;
+}
+
 function insert_array_contents($table, $fields) {
   global $dbh;
 
@@ -120,9 +122,7 @@ function insert_array_contents($table, $fields) {
 
   $sql = 'INSERT INTO ' . $table . ' (' . join(', ', $keys) . ')'
        . ' VALUES (' . join(', ', $values) . ')';
-  maybe_log($sql);
-  mysql_query($sql, $dbh)
-    or die('Error inserting ' . $table . ': ' . mysql_error($dbh));
+  exec_sql($sql);
   return mysql_insert_id($dbh);
 }
 
@@ -138,9 +138,7 @@ function update_where($table, $fields, $where) {
   }
 
   $sql = "UPDATE $table SET " . join(', ', $sets) . " WHERE $where";
-  maybe_log($sql);
-  mysql_query($sql, $dbh)
-    or die('Error inserting ' . $table . ': ' . mysql_error($dbh));
+  exec_sql($sql);
 }
 
 function update_all($table, $fields, $key, $id) {

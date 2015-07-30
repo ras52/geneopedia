@@ -34,4 +34,11 @@ if [ -e $ROOT/install.local.sh ]; then
   . $ROOT/install.local.sh
 fi
 
+if crontab -l > /dev/null 2>&1; then
+  echo Not overwriting user crontab >&2
+else
+  crontab $ROOT/cron/crontab
+fi
+
 echo Done >&2
+

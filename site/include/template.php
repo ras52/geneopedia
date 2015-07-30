@@ -4,6 +4,12 @@ include_once('include/utils.php');
 
 header('Content-Type: text/html; charset=utf-8'); 
 
+function do_page_content() {
+  global $error_page; 
+  if (isset($error_page)) $error_page();
+  else content();
+}
+
 ?><!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
   <head>
@@ -28,7 +34,7 @@ header('Content-Type: text/html; charset=utf-8');
           <?php include('include/menu.php'); ?>
         </td>
         <td id="page-content">
-          <?php content(); ?>
+          <?php do_page_content(); ?>
         </td>
       </tr>
       <tr>

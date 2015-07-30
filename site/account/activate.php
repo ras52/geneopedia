@@ -29,13 +29,15 @@ function content() {
   # Don't set login cookie now.  This is to prevent someone hijacking
   # a login token, using it, and benefiting from a pre-logged-in session.  
   # This way, they still need a password.
+
+  global $config;
   ?>
 
     <h2>Account activated</h2>
 
     <p>Thank you for activating your account.
-      You shouldn't need to do that again.
-      You may now want to <a href="login">log in</a>.</p>
+      You shouldn't need to do that again.  You may now want to 
+      <a href="<?php esc($config['http_path']) ?>account/login">log in</a>.</p>
 
 <?php }
 
