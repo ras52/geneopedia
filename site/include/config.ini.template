@@ -2,4 +2,16 @@
 
 title = "Geneopedia"
 
+domain = "localhost"
+http_path = "/"
+
+[auth]
+secret = ""
+
+[database]
+hostname = "localhost"
+username = "geneopedia"
+password = ""
+database = "geneopedia"
+log_sql = 0
 

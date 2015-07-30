@@ -75,17 +75,18 @@ function send_activation_email($email, $name, $token) {
 
   error_log("Sending activation token '$token' to <$email> (uid: $uid)");
 
+  $root = 'http://'.$config['domain'].$config['http_path'];
+
   $msg  = "Thank you for registering with ".$config['title']."\n"
         . "\n"
         . "To activate your account, please follow the following link:\n"
         . "\n"
-        . "  ".$config['site_root']."activate.php?&token=".$token."\n"
+        . "  ${root}activate.php?token=".$token."\n"
         . "\n"
         . "If you did not request this account, there is no need to \n"
         . "take any further action, and you will not receive further \n"
         . "mail from us.\n";
 
-error_log($msg);
   mail( sprintf('"%s" <%s>', $name, $email),
         $config['title']." account activation", $msg )
     or die('Unable to send email');

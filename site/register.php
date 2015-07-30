@@ -47,7 +47,8 @@ function content() {
       <p>An email has just been sent to the email address you supplied.  This
         contains a link which you should follow to activate your account.</p>
       
-      <?php
+      <?php 
+        return;
     }
   }
   ?>

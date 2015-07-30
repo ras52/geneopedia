@@ -14,7 +14,8 @@ function esc($text) {
 
 function do_redirect($url) {
   global $config;
-  return header("Location: ".$config['site_root'].$url);
+  $root = 'http://'.$config['domain'].$config['http_path'];
+  return header("Location: ${root}${url}");
 }
 
 

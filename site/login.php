@@ -64,11 +64,20 @@ function content() {
       <div class="fieldrow">
         <?php text_field($_POST, 'email', 'Email address') ?>
       </div>
+
       <div class="fieldrow">
         <div>
           <label for="password">Password</label>
           <input type="password" id="password" name="password" />
         </div>
+      </div>
+
+      <div class="fieldrow">
+        <input type="checkbox" id="forever" name="forever" value="1"
+               checked="checked" />
+        <label for="forever">Stay logged in?
+          <br/><span class="label-extra">If you are using a shared computer,
+          you should not set this option.</span></label>
       </div>
 
       <div class="fieldrow">
