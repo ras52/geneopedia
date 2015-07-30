@@ -13,11 +13,18 @@ function preload_user() {
   }
 
   $user = fetch_one_or_none('users', 'id', $_GET['id']);
-  if (!$user) {
+  if (!$user || is_null($user->date_verified)) {
     http_response_code(404);
     $error_page = 'error_404_content';
   }
 }
+
+function header_content() { 
+  global $user; ?>
+  <link rel="alternate" type="application/rdf+xml" href="<?php 
+    esc($user->id) ?>.rdf" />
+<?php }
+
 
 function content() {
   global $user;  
@@ -29,4 +36,11 @@ function content() {
 }
 
 preload_user();
+
+# RDF content negotiation
+$accept = new http\Header('Accept', $_SERVER['HTTP_ACCEPT']);
+$ct = $accept->negotiate( array('text/html','application/rdf+xml') ); 
+if ($ct == 'application/rdf+xml')
+  return do_redirect('accounts/'.$user->id.'.rdf');
+
 include('include/template.php');

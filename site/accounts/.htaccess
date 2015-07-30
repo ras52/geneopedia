@@ -3,3 +3,5 @@ Options -MultiViews
 RewriteEngine on
 
 RewriteRule "^(\d+)$"               "view.php?id=$1"              [L]
+RewriteRule "^(\d+)\.rdf$"          "metadata.php?id=$1"          [L]
+

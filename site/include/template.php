@@ -20,6 +20,7 @@ function do_page_content() {
           ?>favicon.ico" sizes="16x16" type="image/vnd.microsoft.icon" />
     <link rel="stylesheet" href="<?php esc($config['http_path'])
           ?>style.css" type="text/css" />
+    <?php if (function_exists('header_content')) header_content() ?>
   </head>
   <body>
     <table id="page-table">
