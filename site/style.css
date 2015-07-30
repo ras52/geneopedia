@@ -20,10 +20,27 @@ h1 a, h1 a:link, h1 a:visited {
     color: #00a651; /* Our cedar green colour */
 }
 
+h2 {
+    font-size: 125%;
+    margin-bottom: 0.5em;
+}
+
+h3 {
+    font-size: 100%;
+    margin-bottom: 0.5em;
+} 
+
 a {
     text-decoration: none;
 }
 
+.error {
+    color: red;
+}
+
+/* 
+ *  Site box model 
+ */ 
 
 #page-header, #left-header, #page-main, #page-menu, #page-footer {
     vertical-align: top;
@@ -74,4 +91,44 @@ a {
     } 
 }
 
+/*
+ * Forms 
+ */
+
+div.fieldrow, fieldset, .form-instructions {
+    margin-top: 1em;
+}
+
+div.fieldrow:first-child {
+    margin-top: 0em;
+}
+
+div.fieldrow > div, fieldset > div, div.fieldrow > .field, fieldset > .field {
+    vertical-align: top;
+    display: inline-block;
+}
+
+div.fieldrow div.fieldrow, fieldset div.fieldrow {
+    display: block;
+}
+
+label, legend {
+    font-weight: bold;
+    display: block;
+}
+
+
+input[type='checkbox'], input[type='checkbox'] + label {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+input[type='checkbox'] + label {
+    margin-left: 1em;
+}
+
+
+.label-extra {
+    font-weight: normal;
+}
 
