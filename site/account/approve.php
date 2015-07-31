@@ -3,6 +3,7 @@ set_include_path('..');
 
 include_once('include/database.php');
 include_once('include/forms.php');
+include_once('include/activation.php');
 
 function content() {
   global $config;
@@ -48,6 +49,7 @@ function content() {
         $config['title']." account approved", $msg )
     or die('Unable to send email');
   
+  register_user_rdf($user);
   page_header("Account approved"); ?>
 
   <p>Thank you for approving <?php esc($user->name) ?>'s account.</p>

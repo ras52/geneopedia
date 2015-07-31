@@ -5,6 +5,27 @@ include_once('include/database.php');
 include_once('include/forms.php');
 include_once('include/activation.php');
 
+function send_activation_email($email, $name, $token) {
+  global $config;
+
+  error_log("Sending activation token '$token' to <$email> (uid: $uid)");
+
+  $root = 'http://'.$config['domain'].$config['http_path'];
+
+  $msg  = "Thank you for registering with ".$config['title']."\n"
+        . "\n"
+        . "To activate your account, please follow the following link:\n"
+        . "\n"
+        . "  ${root}account/activate/".$token."\n"
+        . "\n"
+        . "If you did not request this account, there is no need to \n"
+        . "take any further action, and you will not receive further \n"
+        . "mail from us.\n";
+
+  mail( sprintf('"%s" <%s>', $name, $email),
+        $config['title']." account activation", $msg )
+    or die('Unable to send email');
+}
 
 function content() {
   $errors = array();

@@ -1,94 +1,75 @@
 <?php
+include_once('include/sparql.php');
 
-function validate_email_address($email)
-{
+function validate_email_address($email) {
    # Based on http://www.linuxjournal.com/article/9585
 
-   $isValid = true;
    $atIndex = strrpos($email, "@");
-   if (is_bool($atIndex) && !$atIndex)
-   {
-      $isValid = false;
+   if (is_bool($atIndex) && !$atIndex) {
+      return false;
    }
-   else
-   {
+   else {
       $domain = substr($email, $atIndex+1);
       $local = substr($email, 0, $atIndex);
       $localLen = strlen($local);
       $domainLen = strlen($domain);
+
       if ($localLen < 1 || $localLen > 64)
-      {
-         // local part length exceeded
-         $isValid = false;
-      }
+         return false;
+      
       else if ($domainLen < 1 || $domainLen > 255)
-      {
-         // domain part length exceeded
-         $isValid = false;
-      }
+         return false;
+      
+      // Local part may not starts or ends with a dot
       else if ($local[0] == '.' || $local[$localLen-1] == '.')
-      {
-         // local part starts or ends with '.'
-         $isValid = false;
-      }
+         return false;
+      
+      // Local part may not contain two consecutive dots
       else if (preg_match('/\\.\\./', $local))
-      {
-         // local part has two consecutive dots
-         $isValid = false;
-      }
+         return false;
+     
+      // Valid characters in domain are A-Z, a-z, 0-9, - and .
       else if (!preg_match('/^[A-Za-z0-9\\-\\.]+$/', $domain))
-      {
-         // character not valid in domain part
-         $isValid = false;
-      }
+         return false;
+      
+      // Domain has two consecutive dots
       else if (preg_match('/\\.\\./', $domain))
-      {
-         // domain part has two consecutive dots
-         $isValid = false;
-      }
+        return false;
+      
       else if (!preg_match('/^(\\\\.|[A-Za-z0-9!#%&`_=\\/$\'*+?^{}|~.-])+$/',
-                 str_replace("\\\\","",$local)))
-      {
-         // character not valid in local part unless 
-         // local part is quoted
+                 str_replace("\\\\","",$local))) {
+         // XXX.  Not sure about this test.
+         // Apparently "character not valid in local part unless 
+         // local part is quoted"
          if (!preg_match('/^"(\\\\"|[^"])+"$/',
              str_replace("\\\\","",$local)))
-         {
-            $isValid = false;
-         }
+           return false;
       }
-      if ($isValid && !(checkdnsrr($domain,"MX") || checkdnsrr($domain,"A")))
-      {
-         // domain not found in DNS
-         $isValid = false;
-      }
+      // Is the domain in DNS?
+      if (!checkdnsrr($domain,"MX") && !checkdnsrr($domain,"A"))
+         return false;
    }
-   return $isValid;
+   return true;
 }
 
 function make_random_token() {
   return sha1(openssl_random_pseudo_bytes(16));
 }
 
-function send_activation_email($email, $name, $token) {
+function register_user_rdf($user) {
   global $config;
+  $uri = "http://".$config['domain'].$config['http_path'].'accounts/'
+       . $user->id;
 
-  error_log("Sending activation token '$token' to <$email> (uid: $uid)");
-
-  $root = 'http://'.$config['domain'].$config['http_path'];
-
-  $msg  = "Thank you for registering with ".$config['title']."\n"
-        . "\n"
-        . "To activate your account, please follow the following link:\n"
-        . "\n"
-        . "  ${root}account/activate/".$token."\n"
-        . "\n"
-        . "If you did not request this account, there is no need to \n"
-        . "take any further action, and you will not receive further \n"
-        . "mail from us.\n";
-
-  mail( sprintf('"%s" <%s>', $name, $email),
-        $config['title']." account activation", $msg )
-    or die('Unable to send email');
+  $update = <<<EOF
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX wdrs: <http://www.w3.org/2007/05/powder-s#>
+INSERT DATA {
+  GRAPH <$uri.rdf> {
+    <$uri> a dcterms:Agent ; 
+           wdrs:describedby <$uri.rdf> .
+  }
 }
-
+EOF;
+  send_sparql_update($update);
+}

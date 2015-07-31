@@ -4,7 +4,9 @@ set_include_path('..');
 include_once('include/database.php');
 
 function content() {
-  $users = fetch_wol('*', 'users', 'date_verified IS NOT NULL', 'name ASC'); ?>
+  $users = fetch_wol('*', 'users', 
+                     'date_verified IS NOT NULL AND date_approved IS NOT NULL',
+                     'name ASC'); ?>
   <h2>Accounts</h2>
 
   <table>

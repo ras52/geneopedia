@@ -2,11 +2,28 @@
 set_include_path('..');
 
 include_once('include/database.php');
+include_once('include/sparql.php');
 
 function error() {
   http_response_code(404);
   header('Content-Type: text/plain');
   exit;
+}
+
+function retrieve_rdf($user, $mime) {
+  global $config;
+  $uri = "http://".$config['domain'].$config['http_path'].'accounts/'
+       . $user->id;
+
+  $sparql = <<<EOF
+CONSTRUCT { ?s ?p ?o } 
+WHERE { 
+  GRAPH <$uri.rdf> { ?s ?p ?o } . 
+}
+EOF;
+
+  $rdf = send_sparql_query($sparql);
+  return tidy_rdf($rdf, "$uri.rdf", $mime);
 }
 
 function raw_content() {
@@ -17,19 +34,15 @@ function raw_content() {
   $user = fetch_one_or_none('users', 'id', $_GET['id']);
   if (!$user || is_null($user->date_verified)) error();
 
-  header('Content-Type: application/rdf+xml');
+  $mime = 'application/rdf+xml';
+  if (array_key_exists('extension', $_GET)) {
+    $ext = $_GET['extension'];
+    if ($ext == 'ttl' || $ext == 'turtle') $mime = 'text/turtle';
+    else if ($ext == 'nt' || $ext == 'n3') $mime = 'application/n-triples';
+  }
 
-  $base = "http://" . $config['domain'] . $_SERVER['REQUEST_URI'];
-
-?><?xml version="1.0" encoding="UTF-8"?>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-         xmlns:dcterms="http://purl.org/dc/terms/"
-         xmlns:wdrs="http://www.w3.org/2007/05/powder-s#"
-         xml:base="<?php esc($base) ?>">
-  <dcterms:Agent rdf:ID="A">
-    <wdrs:describedby rdf:resource="<?php esc($user->id) ?>.rdf"/>
-  </dcterms:Agent>
-</rdf:RDF>
-<?php }
+  header("Content-Type: $mime");
+  echo retrieve_rdf($user, $mime);
+}
 
 raw_content();

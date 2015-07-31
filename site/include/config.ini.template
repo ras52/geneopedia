@@ -19,3 +19,6 @@ log_sql = 0
 hostname = "localhost"
 port     = 7001
 domain   = "geneopedia"
+
+[sparql]
+endpoint = "http://localhost:9000/"

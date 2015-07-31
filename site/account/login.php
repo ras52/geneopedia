@@ -48,6 +48,9 @@ function do_login() {
   elseif (!$users[0]->date_verified) 
     $errors[] = 'Your account is not yet activated';
   
+  elseif (!$users[0]->date_approved) 
+    $errors[] = 'Your account is not yet approved';
+
   if (count($errors)) return;
    
   $forever = (array_key_exists('forever', $_POST) && $_POST['forever']);
