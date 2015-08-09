@@ -30,7 +30,8 @@ function tidy_rdf($rdf, $base, $mime) {
   else if ($mime == 'application/n-triples') $fmt = 'ntriples';
   else if ($mime == 'text/turtle') $fmt = 'turtle';
 
-  $cmd = "rapper -o $fmt - '$base'";
+  $xslt = get_include_path()."/include/setns.xsl";
+  $cmd = "rapper -o $fmt - '$base' | xsltproc $xslt - | xmllint --format -";
   $proc = proc_open( $cmd, $descriptorspec, $pipes );
   if (!$proc || !is_resource($proc)) return $rdf;
 

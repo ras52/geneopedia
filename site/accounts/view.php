@@ -20,10 +20,17 @@ function preload_user() {
 }
 
 function header_content() { 
-  global $user; ?>
-  <link rel="alternate" type="application/rdf+xml" href="<?php 
-    esc($user->id) ?>.rdf" />
-<?php }
+  global $user; 
+
+  $types = array( 'rdf' => 'application/rdf+xml',
+                  'ttl' => 'text/turtle',
+                  'nt'  => 'application/n-triples',
+                  'ged' => 'application/x-gedcom' );
+  foreach ( array_keys($types) as $ext ) { ?>
+    <link rel="alternate" type="<?php esc($types[$ext]) ?>" href="<?php 
+      esc($user->id) ?>.<?php esc($ext) ?>" />
+  <?php }
+}
 
 
 function content() {
@@ -35,8 +42,11 @@ preload_user();
 
 # RDF content negotiation
 $accept = new http\Header('Accept', $_SERVER['HTTP_ACCEPT']);
-$ct = $accept->negotiate( array('text/html','application/rdf+xml') ); 
+$ct = $accept->negotiate( array('text/html','application/rdf+xml', 
+                                'application/x-gedcom') ); 
 if ($ct == 'application/rdf+xml')
   return do_redirect('accounts/'.$user->id.'.rdf');
+else if ($ct == 'application/x-gedcom')
+  return do_redirect('accounts/'.$user->id.'.ged');
 
 include('include/template.php');

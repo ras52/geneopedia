@@ -28,7 +28,7 @@ sed -r "s/^([ \t]*password[ \t]*=[ \t]*)\"\"/\1\"$MYSQLPASS\"/;
   < $ROOT/site/include/config.ini.template \
   > $ROOT/site/include/config.ini
 
-$ROOT/mysql.php < $ROOT/db/001-users.sql
+cat $ROOT/db/001-users.sql $ROOT/db/002-files.sql | $ROOT/mysql.php
 
 if [ -e $ROOT/install.local.sh ]; then
   . $ROOT/install.local.sh
