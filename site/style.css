@@ -152,6 +152,10 @@ input[type='checkbox'] + label {
     margin-left: 1em;
 }
 
+fieldset {
+    border: 1px solid #00a651; /* Our cedar green colour */
+    margin-bottom: 0.2em;
+}
 
 .label-extra {
     font-weight: normal;
