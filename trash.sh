@@ -12,8 +12,8 @@ fi
 rm -f $ROOT/site/include/config.ini
 
 echo "About to be prompted for the MySQL root password" >&2
-mysql -p -u root <<EOF
-  DROP DATABASE geneopedia;
+mysql -p -u root <<EOF || true
+  DROP DATABASE IF EXISTS geneopedia;
   DROP USER 'geneopedia'@'localhost';
 EOF
 
