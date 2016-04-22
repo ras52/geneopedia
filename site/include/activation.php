@@ -58,7 +58,7 @@ function make_random_token() {
 
 function register_user_rdf($user) {
   global $config;
-  $uri = "http://".$config['domain'].$config['http_path'].'accounts/'
+  $uri = "http://".$config['domain'].$config['http_path'].'users/'
        . $user->id;
 
   $update = <<<EOF
