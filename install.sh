@@ -4,7 +4,7 @@ set -e
 
 ROOT=$(dirname $0)
 
-if [ ! -x $ROOT/.geneopedia-root ]; then
+if [ ! -e $ROOT/.geneopedia-root ]; then
   echo Unable to determine root >&2
   exit 1
 fi
