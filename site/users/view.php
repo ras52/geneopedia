@@ -44,6 +44,7 @@ preload_user();
 $accept = new http\Header('Accept', $_SERVER['HTTP_ACCEPT']);
 $ct = $accept->negotiate( array('text/html','application/rdf+xml', 
                                 'application/x-gedcom') ); 
+header('Vary: Accept');
 if ($ct == 'application/rdf+xml')
   return do_redirect('accounts/'.$user->id.'.rdf');
 else if ($ct == 'application/x-gedcom')
