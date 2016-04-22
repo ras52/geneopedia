@@ -100,6 +100,22 @@ a {
     } 
 }
 
+.control:before {
+    content: '[';
+    padding-right: 0.3em;
+}
+
+.control:after {
+    content: ']';
+    padding-left: 0.3em;
+}
+
+.small.control {
+    font-size: 75%;
+}
+
+
+
 /*
  * Forms 
  */

@@ -4,4 +4,5 @@ RewriteEngine on
 
 RewriteRule "^(\d+)$"               "view.php?id=$1"                  [L]
 RewriteRule "^(\d+)\.(rdf|ttl|nt)$" "metadata.php?id=$1&extension=$2" [L]
+RewriteRule "^(\d+)\.ged$"          "gedcom.php?id=$1"                [L]
 
