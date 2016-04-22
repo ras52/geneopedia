@@ -34,6 +34,8 @@ function content() {
   ?>
 
     <form method="post" action="" accept-charset="UTF-8">
+      <fieldset>
+        <legend>Details</legend>
         <div class="fieldrow">
           <?php text_field($fields, 'name', 'Name', 'publicly visible') ?>
         </div>
@@ -56,6 +58,13 @@ function content() {
         <div class="fieldrow">
           <input type="submit" name="apply" value="Update"/>
         </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Contact details</legend>
+        <p>Any details entered here will be made publicly available.</p>
+<?php /*NAME, ADDR, PHON, EMAIL, FAX, WWW, OBJE, LANG, RFN, RIN, NOTE, CHAN*/?>
+      </fieldset>
     </form>
 <?php
 }
